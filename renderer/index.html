@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src https: http: data:; media-src https: http:; style-src 'self' 'unsafe-inline'; script-src 'self'" />
+  <title>Melody 拾音</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- 标题栏：左侧标题 + 右侧窗口按钮（Windows 文字样式） -->
+    <div id="titlebar">
+      <div class="tb-title" id="tb-title">Melody 拾音</div>
+      <div class="win-controls">
+        <button class="wc-btn" id="wc-min" title="最小化">
+          <svg viewBox="0 0 12 12"><path d="M2 6h8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </button>
+        <button class="wc-btn" id="wc-max" title="最大化 / 还原">
+          <svg id="ic-max" viewBox="0 0 12 12"><rect x="2.5" y="2.5" width="7" height="7" rx="1.2" stroke="currentColor" stroke-width="1.1" fill="none"/></svg>
+          <svg id="ic-restore" viewBox="0 0 12 12" style="display:none"><rect x="2" y="4" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.1" fill="none"/><path d="M4.2 4V2.6A1.1 1.1 0 0 1 5.3 1.5h4.2A1.1 1.1 0 0 1 10.5 2.6v4.2a1.1 1.1 0 0 1-1.4 1.05" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg>
+        </button>
+        <button class="wc-btn wc-close" id="wc-close" title="关闭">
+          <svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- 侧栏 -->
+    <aside id="sidebar">
+      <nav class="nav">
+        <div class="nav-item active" data-view="search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+          <span>搜索</span>
+        </div>
+        <div class="nav-item" data-view="queue">
+          <svg viewBox="0 0 24 24"><path d="M3 6h13M3 12h13M3 18h9"/><circle cx="18.5" cy="16.5" r="2.5"/><path d="M21 16.5V9l-3 1"/></svg>
+          <span>播放队列</span>
+        </div>
+        <div class="nav-item" data-view="fav">
+          <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.7-10-9.3C.5 8 2.5 4.5 6 4.5c2.2 0 4 1.3 6 3.6 2-2.3 3.8-3.6 6-3.6 3.5 0 5.5 3.5 4 7.2C19.5 16.3 12 21 12 21z"/></svg>
+          <span>我喜欢</span>
+          <em class="badge" id="fav-count"></em>
+        </div>
+        <div class="nav-item" data-view="recent">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+          <span>最近播放</span>
+        </div>
+        <div class="nav-item" data-view="dl">
+          <svg viewBox="0 0 24 24"><path d="M12 4v10m0 0l-4-4m4 4l4-4M5 19h14"/></svg>
+          <span>下载管理</span>
+          <em class="badge" id="dl-count"></em>
+        </div>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="now-mini" id="now-mini" hidden>
+          <img id="now-mini-cover" alt="" />
+          <div class="nm-txt">
+            <div class="nm-title" id="now-mini-title"></div>
+            <div class="nm-artist" id="now-mini-artist"></div>
+          </div>
+        </div>
+        <div class="theme-row" id="theme-row" title="主题"></div>
+        <div class="app-tag">拾音</div>
+      </div>
+    </aside>
+
+    <!-- 主内容 -->
+    <main id="main">
+      <section id="view-search" class="view active">
+        <header id="search-header">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" class="sb-icon"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+            <input id="search-input" type="text" placeholder="搜索歌曲、歌手…（回车搜索）" />
+          </div>
+          <div class="platform-chips" id="platform-chips">
+            <button class="chip" data-platform="netease">网易云</button>
+            <button class="chip" data-platform="kuwo">酷我</button>
+            <button class="chip" data-platform="kugou">酷狗</button>
+            <button class="chip" data-platform="migu">咪咕</button>
+            <button class="chip" data-platform="all">全部</button>
+          </div>
+        </header>
+        <div class="result-meta" id="result-meta"></div>
+        <div class="list" id="search-list"></div>
+        <div class="load-more-wrap"><button id="load-more" class="btn-ghost" hidden>加载更多</button></div>
+      </section>
+
+      <section id="view-queue" class="view">
+        <div class="view-head">
+          <h2>播放队列</h2>
+          <button class="btn-ghost" id="clear-queue">清空</button>
+        </div>
+        <div class="list" id="queue-list"></div>
+      </section>
+
+      <section id="view-fav" class="view">
+        <div class="view-head"><h2>我喜欢</h2></div>
+        <div class="list" id="fav-list"></div>
+      </section>
+
+      <section id="view-recent" class="view">
+        <div class="view-head"><h2>最近播放</h2></div>
+        <div class="list" id="recent-list"></div>
+      </section>
+
+      <section id="view-dl" class="view">
+        <div class="view-head">
+          <h2>下载管理</h2>
+          <div class="dl-tools">
+            <button class="btn-ghost" id="dl-open">打开目录</button>
+            <button class="btn-ghost" id="dl-dir">更改目录</button>
+            <button class="btn-ghost" id="dl-clear">清除已完成</button>
+          </div>
+        </div>
+        <div class="dl-dir-row" id="dl-dir-row"></div>
+        <div class="list" id="dl-list"></div>
+      </section>
+
+      <!-- 正在播放 / 歌词（独立视图，替代主内容区） -->
+      <section id="view-lyrics" class="view">
+        <div class="ly-head">
+          <button class="btn-ghost ly-back" id="ly-back" title="返回 (Esc)">
+            <svg viewBox="0 0 24 24"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg>
+            <span>返回</span>
+          </button>
+          <div class="ly-nowtag">正在播放</div>
+        </div>
+        <div class="ly-wrap">
+          <div class="ly-left">
+            <img id="ly-cover" alt="" />
+            <div class="ly-title" id="ly-title"></div>
+            <div class="ly-artist" id="ly-artist"></div>
+            <div class="ly-src" id="ly-src"></div>
+          </div>
+          <div class="ly-scroll" id="ly-scroll"></div>
+        </div>
+      </section>
+
+      <div id="empty-hint" class="empty" hidden>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M8.5 15c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"/></svg>
+        <p>搜索想听的歌，双击即可播放</p>
+      </div>
+    </main>
+
+    <!-- 播放条 -->
+    <footer id="player">
+      <div class="pl-left">
+        <img id="pl-cover" alt="" />
+        <div class="pl-meta">
+          <div class="pl-title" id="pl-title">未在播放</div>
+          <div class="pl-artist" id="pl-artist">Melody 拾音</div>
+        </div>
+        <button class="icon-btn" id="btn-fav-player" title="我喜欢">
+          <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.7-10-9.3C.5 8 2.5 4.5 6 4.5c2.2 0 4 1.3 6 3.6 2-2.3 3.8-3.6 6-3.6 3.5 0 5.5 3.5 4 7.2C19.5 16.3 12 21 12 21z"/></svg>
+        </button>
+      </div>
+      <div class="pl-center">
+        <div class="pl-controls">
+          <button class="icon-btn" id="btn-mode" title="播放模式">
+            <svg id="ic-mode" viewBox="0 0 24 24"></svg>
+          </button>
+          <button class="icon-btn" id="btn-prev" title="上一首">
+            <svg viewBox="0 0 24 24"><path d="M6 5v14M20 5l-11 7 11 7z"/></svg>
+          </button>
+          <button class="play-btn" id="btn-play" title="播放/暂停">
+            <svg id="ic-play" viewBox="0 0 24 24"><path d="M8 5l12 7-12 7z"/></svg>
+            <svg id="ic-pause" viewBox="0 0 24 24" style="display:none"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <button class="icon-btn" id="btn-next" title="下一首">
+            <svg viewBox="0 0 24 24"><path d="M18 5v14M4 5l11 7-11 7z"/></svg>
+          </button>
+          <button class="icon-btn" id="btn-lyric" title="歌词">
+            <svg viewBox="0 0 24 24"><path d="M4 6h16M4 11h10M4 16h13"/></svg>
+          </button>
+        </div>
+        <div class="pl-progress">
+          <span class="time" id="time-cur">0:00</span>
+          <input type="range" id="progress" value="0" min="0" max="1000" step="1" />
+          <span class="time" id="time-total">0:00</span>
+        </div>
+      </div>
+      <div class="pl-right">
+        <button class="icon-btn" id="btn-dl" title="下载">
+          <svg viewBox="0 0 24 24"><path d="M12 4v10m0 0l-4-4m4 4l4-4M5 19h14"/></svg>
+        </button>
+        <svg viewBox="0 0 24 24" class="vol-icon"><path d="M4 9v6h4l5 4V5L8 9zM16 9c1.2 1 1.2 5 0 6M18.5 7c2.2 2 2.2 8 0 10"/></svg>
+        <input type="range" id="volume" min="0" max="100" value="80" />
+      </div>
+    </footer>
+  </div>
+
+  <audio id="audio" preload="auto"></audio>
+  <div id="toasts"></div>
+  <script src="app.js"></script>
+</body>
+</html>

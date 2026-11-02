@@ -1,0 +1,19 @@
+{
+  "name": "melody-music",
+  "productName": "Melody 拾音",
+  "version": "0.2.0",
+  "description": "Mac 风格全网音乐搜索与播放桌面应用（液态玻璃 · 多主题 · 下载队列 · 歌词点播）",
+  "main": "main.js",
+  "author": "frankshare",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frankshare/melody-music.git"
+  },
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^33.2.0"
+  }
+}
