@@ -46,7 +46,7 @@ function createWindow() {
     show: false,
     backgroundColor: '#16161b',
     title: '拾音',
-    icon: path.join(__dirname, 'assets', 'icon.ico'),
+    icon: path.join(__dirname, 'assets', 'icon-shiyin.ico'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -73,7 +73,7 @@ function createWindow() {
 
 function createTray() {
   try {
-    tray = new Tray(path.join(__dirname, 'assets', 'icon.ico'));
+    tray = new Tray(path.join(__dirname, 'assets', 'icon-shiyin.ico'));
     tray.setToolTip('拾音 — 后台播放中');
     tray.setContextMenu(Menu.buildFromTemplate([
       { label: '显示主界面', click: () => { if (win) { win.show(); win.focus(); } } },

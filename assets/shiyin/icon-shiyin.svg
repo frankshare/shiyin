@@ -12,19 +12,20 @@
       <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.18"/>
       <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="starGlow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#FFE7B8" stop-opacity="0.85"/>
-      <stop offset="0.45" stop-color="#FFD98F" stop-opacity="0.3"/>
-      <stop offset="1" stop-color="#FFD98F" stop-opacity="0"/>
+    <radialGradient id="noteGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#E8D9FF" stop-opacity="0.55"/>
+      <stop offset="0.5" stop-color="#C9B2FF" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#C9B2FF" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="handGrad" x1="0.1" y1="0" x2="0.9" y2="1">
       <stop offset="0" stop-color="#FBEBD6"/>
       <stop offset="0.55" stop-color="#F3D9B8"/>
       <stop offset="1" stop-color="#E9C49A"/>
     </linearGradient>
-    <linearGradient id="starFill" x1="0.2" y1="0" x2="0.8" y2="1">
-      <stop offset="0" stop-color="#FFF6E2"/>
-      <stop offset="1" stop-color="#FFD98F"/>
+    <linearGradient id="noteFill" x1="0.1" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.6" stop-color="#F4ECFF"/>
+      <stop offset="1" stop-color="#DCC9FF"/>
     </linearGradient>
     <filter id="noise">
       <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/>
@@ -39,14 +40,51 @@
     </filter>
   </defs>
 
-  <g clip-path="url(#squircle)">
+  <g>
     <rect width="1024" height="1024" fill="url(#bg)" filter="url(#noise)"/>
     <rect width="1024" height="1024" fill="url(#lift)"/>
-    <circle cx="512" cy="430" r="230" fill="url(#starGlow)"/>
-    <path d="M 682 352 A 230 230 0 0 1 682 508" fill="none" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="20" stroke-linecap="round"/>
-    <path d="M 736 308 A 310 310 0 0 1 736 552" fill="none" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/>
-    <path d="M 342 352 A 230 230 0 0 0 342 508" fill="none" stroke="#FFFFFF" stroke-opacity="0.2" stroke-width="16" stroke-linecap="round"/>
-    <ellipse cx="512" cy="836" rx="250" ry="44" fill="#2A0F8E" opacity="0.42" filter="url(#soft)"/>
+    <circle cx="516" cy="420" r="250" fill="url(#noteGlow)"/>
+
+    <!-- 声波弧 -->
+    <path d="M 700 340 A 240 240 0 0 1 700 500" fill="none" stroke="#FFFFFF" stroke-opacity="0.42" stroke-width="20" stroke-linecap="round"/>
+    <path d="M 756 292 A 320 320 0 0 1 756 548" fill="none" stroke="#FFFFFF" stroke-opacity="0.2" stroke-width="16" stroke-linecap="round"/>
+    <path d="M 332 340 A 240 240 0 0 0 332 500" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="16" stroke-linecap="round"/>
+
+    <!-- 手托投影 -->
+    <ellipse cx="512" cy="838" rx="250" ry="44" fill="#2A0F8E" opacity="0.42" filter="url(#soft)"/>
+
+    <!-- ===== 音符（抖音风错位霓虹）===== -->
+    <g transform="rotate(-8 520 410)">
+      <!-- 青色错位层 -->
+      <g fill="#6FE3FF" opacity="0.75" transform="translate(-18 -10)">
+        <path d="M 404 316 L 648 288 L 648 316 L 404 344 Z"/>
+        <path d="M 412 330 h 26 v 170 h -26 z"/>
+        <path d="M 622 302 h 26 v 150 h -26 z"/>
+        <ellipse cx="392" cy="516" rx="56" ry="42" transform="rotate(-18 392 516)"/>
+        <ellipse cx="602" cy="488" rx="56" ry="42" transform="rotate(-18 602 488)"/>
+      </g>
+      <!-- 粉色错位层 -->
+      <g fill="#FF8FCB" opacity="0.7" transform="translate(16 12)">
+        <path d="M 404 316 L 648 288 L 648 316 L 404 344 Z"/>
+        <path d="M 412 330 h 26 v 170 h -26 z"/>
+        <path d="M 622 302 h 26 v 150 h -26 z"/>
+        <ellipse cx="392" cy="516" rx="56" ry="42" transform="rotate(-18 392 516)"/>
+        <ellipse cx="602" cy="488" rx="56" ry="42" transform="rotate(-18 602 488)"/>
+      </g>
+      <!-- 音符主体 -->
+      <g fill="url(#noteFill)">
+        <path d="M 404 316 L 648 288 L 648 316 L 404 344 Z"/>
+        <path d="M 412 330 h 26 v 170 h -26 z"/>
+        <path d="M 622 302 h 26 v 150 h -26 z"/>
+        <ellipse cx="392" cy="516" rx="56" ry="42" transform="rotate(-18 392 516)"/>
+        <ellipse cx="602" cy="488" rx="56" ry="42" transform="rotate(-18 602 488)"/>
+      </g>
+      <!-- 音符高光 -->
+      <path d="M 408 320 L 640 293" stroke="#FFFFFF" stroke-opacity="0.85" stroke-width="6" stroke-linecap="round" fill="none"/>
+      <ellipse cx="378" cy="502" rx="24" ry="12" fill="#FFFFFF" opacity="0.75" filter="url(#soft)" transform="rotate(-18 378 502)"/>
+    </g>
+
+    <!-- ===== 托起的手 ===== -->
     <g stroke-linecap="round" fill="none">
       <path d="M 318 596 C 330 700 402 756 504 756 C 604 756 672 714 696 644" stroke="url(#handGrad)" stroke-width="94"/>
       <path d="M 350 588 C 322 540 328 494 358 458" stroke="url(#handGrad)" stroke-width="64"/>
@@ -55,8 +93,8 @@
       <path d="M 536 712 C 566 656 574 606 562 566" stroke="url(#handGrad)" stroke-width="56"/>
       <ellipse cx="430" cy="668" rx="105" ry="38" fill="#FFFFFF" opacity="0.35" filter="url(#soft2)" transform="rotate(-18 430 668)"/>
     </g>
-    <path d="M 512 306 Q 534 408 636 430 Q 534 452 512 554 Q 490 452 388 430 Q 490 408 512 306 Z" fill="url(#starFill)"/>
-    <path d="M 512 348 Q 527 415 594 430 Q 527 445 512 512 Q 497 445 430 430 Q 497 415 512 348 Z" fill="#FFFFFF" opacity="0.75" filter="url(#soft)"/>
-    <path d="M 806 236 Q 813 256 833 263 Q 813 270 806 290 Q 799 270 779 263 Q 799 256 806 236 Z" fill="#FFFFFF" opacity="0.9"/>
+
+    <!-- 签名小星 -->
+    <path d="M 810 208 Q 817 228 837 235 Q 817 242 810 262 Q 803 242 783 235 Q 803 228 810 208 Z" fill="#FFFFFF" opacity="0.9"/>
   </g>
 </svg>

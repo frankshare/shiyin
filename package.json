@@ -31,7 +31,7 @@
       "package.json",
       "services/**/*",
       "renderer/**/*",
-      "assets/icon.ico"
+      "assets/icon-shiyin.ico"
     ],
     "win": {
       "target": [
@@ -42,7 +42,7 @@
           ]
         }
       ],
-      "icon": "assets/icon.ico"
+      "icon": "assets/icon-shiyin.ico"
     },
     "portable": {
       "artifactName": "拾音-${version}.exe"
