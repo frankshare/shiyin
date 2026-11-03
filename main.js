@@ -9,6 +9,31 @@ const dlManager = require('./downloads');
 let win = null;
 let tray = null;
 let quitting = false;
+
+// ---------- 数据目录：下载与缓存统一放 E:\zcode\workspace\Melody ----------
+const DATA_ROOT = 'E:/zcode/workspace/Melody';
+const HAS_DATA_DRIVE = fs.existsSync('E:/');
+if (HAS_DATA_DRIVE) {
+  const cacheDir = path.join(DATA_ROOT, '缓存');
+  try {
+    fs.mkdirSync(cacheDir, { recursive: true });
+    app.setPath('userData', cacheDir);
+    // 旧版用户数据（收藏/设置）迁移到新目录（遍历历史 userData 目录名）
+    const newStore = path.join(cacheDir, 'melody-store.json');
+    if (!fs.existsSync(newStore)) {
+      for (const legacy of ['Melody 拾音', 'shiyin', 'melody-music']) {
+        const oldStore = path.join(app.getPath('appData'), legacy, 'melody-store.json');
+        if (fs.existsSync(oldStore)) {
+          try { fs.copyFileSync(oldStore, newStore); } catch {}
+          break;
+        }
+      }
+    }
+  } catch (e) {
+    console.error('userData redirect failed:', e.message);
+  }
+}
+
 const gotLock = app.requestSingleInstanceLock();
 if (!gotLock) {
   app.quit();
@@ -184,7 +209,9 @@ ipcMain.handle('music:lyric', async (e, track) => {
 
 // ---------- 下载队列 ----------
 function getDownloadDir() {
-  return store.settings.downloadDir || path.join(app.getPath('music'), '拾音');
+  if (store.settings.downloadDir) return store.settings.downloadDir;
+  if (HAS_DATA_DRIVE) return path.join(DATA_ROOT, '下载');
+  return path.join(app.getPath('music'), '拾音');
 }
 
 ipcMain.handle('download:enqueue', async (e, { track, url }) => {
