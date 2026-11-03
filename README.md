@@ -1,4 +1,4 @@
-# Melody 拾音
+# 拾音
 
 Mac 风格（液态玻璃 + 多主题）的全网音乐搜索与播放桌面应用。Electron + 原生 JS，无构建步骤。
 
@@ -43,20 +43,20 @@ Mac 风格（液态玻璃 + 多主题）的全网音乐搜索与播放桌面应�
 
 ## 运行 / 分发给朋友
 
-**直接发给朋友（推荐）**：把 `dist/Melody-SheYin-0.2.0.exe`（约 77MB 单文件）发过去，双击即用，无需安装、无需 Node。
+**直接发给朋友（推荐）**：把 `dist/拾音-0.2.0.exe`（约 77MB 单文件）发过去，双击即用，无需安装、无需 Node。
 
 自己打包：
 
 ```cmd
 npm install
-npm run dist      REM 产出 dist/Melody-SheYin-<版本>.exe
+npm run dist      REM 产出 dist/拾音-<版本>.exe
 ```
 
 开发模式：
 
 ```cmd
 npm install
-Melody.cmd        REM 或 npx electron .
+拾音.cmd          REM 或 npx electron .
 ```
 
 资源占用参考（Windows x64）：打包 exe 77MB；运行时常驻 4 个进程，工作集合计约 300–350MB（Electron 常规水位，Chromium 内核所致）。

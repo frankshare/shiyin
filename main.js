@@ -1,5 +1,5 @@
 'use strict';
-// Melody 拾音 — Electron 主进程
+// 拾音 — Electron 主进程
 const { app, BrowserWindow, ipcMain, dialog, shell, Tray, Menu } = require('electron');
 const path = require('path');
 const fs = require('fs');
@@ -45,7 +45,7 @@ function createWindow() {
     frame: false,
     show: false,
     backgroundColor: '#16161b',
-    title: 'Melody 拾音',
+    title: '拾音',
     icon: path.join(__dirname, 'assets', 'icon.ico'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -74,7 +74,7 @@ function createWindow() {
 function createTray() {
   try {
     tray = new Tray(path.join(__dirname, 'assets', 'icon.ico'));
-    tray.setToolTip('Melody 拾音 — 后台播放中');
+    tray.setToolTip('拾音 — 后台播放中');
     tray.setContextMenu(Menu.buildFromTemplate([
       { label: '显示主界面', click: () => { if (win) { win.show(); win.focus(); } } },
       { label: '退出', click: () => { quitting = true; app.quit(); } },
@@ -184,7 +184,7 @@ ipcMain.handle('music:lyric', async (e, track) => {
 
 // ---------- 下载队列 ----------
 function getDownloadDir() {
-  return store.settings.downloadDir || path.join(app.getPath('music'), 'Melody');
+  return store.settings.downloadDir || path.join(app.getPath('music'), '拾音');
 }
 
 ipcMain.handle('download:enqueue', async (e, { track, url }) => {

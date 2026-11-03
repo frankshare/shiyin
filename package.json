@@ -1,14 +1,14 @@
 {
-  "name": "melody-music",
-  "productName": "Melody 拾音",
+  "name": "shiyin",
+  "productName": "拾音",
   "version": "0.2.0",
-  "description": "Mac 风格全网音乐搜索与播放桌面应用（液态玻璃 · 多主题 · 下载队列 · 歌词点播）",
+  "description": "全网音乐搜索与播放桌面应用（液态玻璃 · 多主题 · 下载队列 · 歌词点播）",
   "main": "main.js",
   "author": "frankshare",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/frankshare/melody-music.git"
+    "url": "git+https://github.com/frankshare/shiyin.git"
   },
   "scripts": {
     "start": "electron .",
@@ -19,8 +19,8 @@
     "electron-builder": "^26.18.0"
   },
   "build": {
-    "appId": "com.frankshare.melody",
-    "productName": "Melody",
+    "appId": "com.frankshare.shiyin",
+    "productName": "拾音",
     "directories": {
       "output": "dist"
     },
@@ -45,7 +45,7 @@
       "icon": "assets/icon.ico"
     },
     "portable": {
-      "artifactName": "Melody-SheYin-${version}.exe"
+      "artifactName": "拾音-${version}.exe"
     },
     "asar": true,
     "compression": "maximum"

@@ -1,5 +1,5 @@
 'use strict';
-/* Melody 拾音 — 渲染层逻辑 */
+/* 拾音 — 渲染层逻辑 */
 const $ = (sel) => document.querySelector(sel);
 const audio = $('#audio');
 
@@ -373,7 +373,7 @@ async function playCurrent(track) {
 function updatePlayerMeta(track, sub) {
   $('#pl-title').textContent = track.title || '未在播放';
   $('#pl-artist').textContent =
-    sub || [track.artist, track.__via ? `${track.__via}音源` : ''].filter(Boolean).join(' · ') || 'Melody 拾音';
+    sub || [track.artist, track.__via ? `${track.__via}音源` : ''].filter(Boolean).join(' · ') || '拾音';
   $('#pl-cover').src = track.cover || '';
   $('#now-mini').hidden = false;
   $('#now-mini-cover').src = track.cover || '';
@@ -384,7 +384,7 @@ function updatePlayerMeta(track, sub) {
   $('#ly-cover').src = track.cover || '';
   const srcEl = $('#ly-src');
   if (srcEl) srcEl.textContent = track.__via ? `音源：${track.__via}` : '';
-  document.title = track.title ? `${track.title} - Melody 拾音` : 'Melody 拾音';
+  document.title = track.title ? `${track.title} - 拾音` : '拾音';
   // 系统媒体浮层（MediaSession）
   if ('mediaSession' in navigator) {
     try {
