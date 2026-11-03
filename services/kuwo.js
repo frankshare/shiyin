@@ -1,6 +1,6 @@
 'use strict';
 // 酷我音乐
-const { fetchJson, probeSize } = require('./http');
+const { fetchJson } = require('./http');
 
 async function search(keyword, page = 1, pageSize = 30) {
   const url =
@@ -82,9 +82,4 @@ async function lyric(track) {
   return { lyric: lrc, trans: '' };
 }
 
-async function checkPlayable(track) {
-  const r = await resolveUrl(track);
-  return r.url ? await probeSize(r.url) : 0;
-}
-
-module.exports = { search, resolveUrl, lyric, checkPlayable };
+module.exports = { search, resolveUrl, lyric };

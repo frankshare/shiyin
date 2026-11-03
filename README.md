@@ -41,28 +41,29 @@ Mac 风格（液态玻璃 + 多主题）的全网音乐搜索与播放桌面应�
 | 网易云 | ✅ | ⚠️ 免费歌全曲 / VIP 无链 | 歌词兜底源 |
 | 酷狗 | ✅ | ❌ 匿名接口已全面付费墙 | 仅搜索，播放靠兜底 |
 
-## 运行
+## 运行 / 分发给朋友
+
+**直接发给朋友（推荐）**：把 `dist/Melody-SheYin-0.2.0.exe`（约 77MB 单文件）发过去，双击即用，无需安装、无需 Node。
+
+自己打包：
 
 ```cmd
-git clone https://github.com/frankshare/melody-music.git
-cd melody-music
+npm install
+npm run dist      REM 产出 dist/Melody-SheYin-<版本>.exe
+```
+
+开发模式：
+
+```cmd
 npm install
 Melody.cmd        REM 或 npx electron .
 ```
 
-要求 Node.js ≥ 18（Electron 33 已随依赖安装）。
+资源占用参考（Windows x64）：打包 exe 77MB；运行时常驻 4 个进程，工作集合计约 300–350MB（Electron 常规水位，Chromium 内核所致）。
 
-### 生成应用图标（可选）
+### 应用图标
 
-图标不入库（避免版权素材）。放一张自己喜欢的方形图到 `assets/icon-base.png`，然后：
-
-```cmd
-py -3 scripts/make-icon.py
-py -3 "<app-icon-studio>/scripts/render.py" assets/icon.svg assets
-py -3 -c "from PIL import Image; Image.open('assets/icon-1024.png').convert('RGBA').save('assets/icon.ico', sizes=[(16,16),(24,24),(32,32),(48,48),(64,64),(128,128),(256,256)])"
-```
-
-没有图标也能正常启动（使用 Electron 默认图标）。
+图标设计源文件为 `assets/shiyin/icon-shiyin.svg`（"拾音"概念：托起发光音符的手 + 声波，原创设计，已入库），多尺寸 PNG 在同目录。更换图标：改该 SVG 后用 Chrome headless 栅格化，再转 .ico 即可。也可用 `scripts/make-icon.py` 以任意方形图做底 + 音符覆盖生成（该脚本读取的 `assets/icon-base.png` 属版权素材，不入库）。
 
 ## 结构
 

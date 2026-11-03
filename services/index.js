@@ -72,4 +72,4 @@ async function resolveWithFallback(track, log) {
   return suspect; // 全是片段时返回最优嫌疑，由调用方决定
 }
 
-module.exports = { platforms, platformNames, resolveWithFallback, validateResolution, matchTrack, norm };
+module.exports = { platforms, platformNames, resolveWithFallback, validateResolution, matchTrack };

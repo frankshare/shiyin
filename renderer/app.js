@@ -311,11 +311,7 @@ function renderRecent() {
 }
 function renderQueue() {
   $('#queue-list').innerHTML = state.queue.length
-    ? state.queue
-        .map((t, i) =>
-          rowHTML(t, i, { showPlatform: true }).replace('class="row ', `class="row ${i === state.queueIndex ? 'playing' : ''} `)
-        )
-        .join('')
+    ? state.queue.map((t, i) => rowHTML(t, i, { showPlatform: true })).join('')
     : emptyRow('队列为空，去搜索页双击歌曲吧');
   markLikeUI();
 }
@@ -657,7 +653,7 @@ function renderDl() {
             : `<button class="icon-btn dl-show" data-id="${d.id}" title="在文件夹中显示"><svg viewBox="0 0 24 24"><path d="M3 8a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></button>`;
       return `
       <div class="dl-item">
-        <img src="${esc(d.cover)}" alt="" onerror="" />
+        <img src="${esc(d.cover)}" alt="" />
         <div class="dl-main">
           <div class="dl-title">${esc(d.title)}</div>
           <div class="dl-sub">${esc(d.artist)}${d.platform ? ' · ' + esc(d.platform) : ''}</div>

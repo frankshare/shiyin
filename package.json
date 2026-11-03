@@ -11,9 +11,43 @@
     "url": "git+https://github.com/frankshare/melody-music.git"
   },
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder --win portable --x64"
   },
   "devDependencies": {
-    "electron": "^33.2.0"
+    "electron": "^33.2.0",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "com.frankshare.melody",
+    "productName": "Melody",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "downloads.js",
+      "package.json",
+      "services/**/*",
+      "renderer/**/*",
+      "assets/icon.ico"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "portable": {
+      "artifactName": "Melody-SheYin-${version}.exe"
+    },
+    "asar": true,
+    "compression": "maximum"
   }
 }

@@ -1,6 +1,6 @@
 'use strict';
 // 网易云音乐（weapi 加密算法为社区公开方案，参考开源项目 musicn）
-const { fetchJson, probeSize } = require('./http');
+const { fetchJson } = require('./http');
 const { createCipheriv, publicEncrypt, randomBytes, constants } = require('node:crypto');
 
 const UA =
@@ -87,9 +87,4 @@ async function lyric(track) {
   return { lyric: json.lrc && json.lrc.lyric || '', trans: json.tlyric && json.tlyric.lyric || '' };
 }
 
-async function checkPlayable(track) {
-  const r = await resolveUrl(track);
-  return r.url ? await probeSize(r.url) : 0;
-}
-
-module.exports = { search, resolveUrl, lyric, checkPlayable };
+module.exports = { search, resolveUrl, lyric };

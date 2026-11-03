@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <clipPath id="squircle">
+      <path d="M0 512 C0 137 137 0 512 0 S1024 137 1024 512 887 1024 512 1024 0 887 0 512 Z"/>
+    </clipPath>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#7A4BFF"/>
+      <stop offset="0.6" stop-color="#5A2BE8"/>
+      <stop offset="1" stop-color="#4519CE"/>
+    </linearGradient>
+    <radialGradient id="lift" cx="0.5" cy="0.4" r="0.75">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="starGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFE7B8" stop-opacity="0.85"/>
+      <stop offset="0.45" stop-color="#FFD98F" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#FFD98F" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="handGrad" x1="0.1" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#FBEBD6"/>
+      <stop offset="0.55" stop-color="#F3D9B8"/>
+      <stop offset="1" stop-color="#E9C49A"/>
+    </linearGradient>
+    <linearGradient id="starFill" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#FFF6E2"/>
+      <stop offset="1" stop-color="#FFD98F"/>
+    </linearGradient>
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.045 0"/>
+      <feComposite operator="over" in2="SourceGraphic"/>
+    </filter>
+    <filter id="soft" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="20"/>
+    </filter>
+    <filter id="soft2" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="26"/>
+    </filter>
+  </defs>
+
+  <g clip-path="url(#squircle)">
+    <rect width="1024" height="1024" fill="url(#bg)" filter="url(#noise)"/>
+    <rect width="1024" height="1024" fill="url(#lift)"/>
+    <circle cx="512" cy="430" r="230" fill="url(#starGlow)"/>
+    <path d="M 682 352 A 230 230 0 0 1 682 508" fill="none" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="20" stroke-linecap="round"/>
+    <path d="M 736 308 A 310 310 0 0 1 736 552" fill="none" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/>
+    <path d="M 342 352 A 230 230 0 0 0 342 508" fill="none" stroke="#FFFFFF" stroke-opacity="0.2" stroke-width="16" stroke-linecap="round"/>
+    <ellipse cx="512" cy="836" rx="250" ry="44" fill="#2A0F8E" opacity="0.42" filter="url(#soft)"/>
+    <g stroke-linecap="round" fill="none">
+      <path d="M 318 596 C 330 700 402 756 504 756 C 604 756 672 714 696 644" stroke="url(#handGrad)" stroke-width="94"/>
+      <path d="M 350 588 C 322 540 328 494 358 458" stroke="url(#handGrad)" stroke-width="64"/>
+      <path d="M 664 668 C 690 610 692 566 678 528" stroke="url(#handGrad)" stroke-width="56"/>
+      <path d="M 600 700 C 630 640 636 590 622 548" stroke="url(#handGrad)" stroke-width="56"/>
+      <path d="M 536 712 C 566 656 574 606 562 566" stroke="url(#handGrad)" stroke-width="56"/>
+      <ellipse cx="430" cy="668" rx="105" ry="38" fill="#FFFFFF" opacity="0.35" filter="url(#soft2)" transform="rotate(-18 430 668)"/>
+    </g>
+    <path d="M 512 306 Q 534 408 636 430 Q 534 452 512 554 Q 490 452 388 430 Q 490 408 512 306 Z" fill="url(#starFill)"/>
+    <path d="M 512 348 Q 527 415 594 430 Q 527 445 512 512 Q 497 445 430 430 Q 497 415 512 348 Z" fill="#FFFFFF" opacity="0.75" filter="url(#soft)"/>
+    <path d="M 806 236 Q 813 256 833 263 Q 813 270 806 290 Q 799 270 779 263 Q 799 256 806 236 Z" fill="#FFFFFF" opacity="0.9"/>
+  </g>
+</svg>

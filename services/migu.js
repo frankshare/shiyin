@@ -1,6 +1,6 @@
 'use strict';
 // 咪咕音乐
-const { fetchJson, probeSize } = require('./http');
+const { fetchJson } = require('./http');
 
 async function search(keyword, page = 1, pageSize = 30) {
   const url =
@@ -41,15 +41,6 @@ const MIGU_HEADERS = {
   version: '7.41.13',
   Referer: 'https://music.migu.cn/',
 };
-const MIGU_TONE_PATHS = {
-  ZQ24: '歌曲下载/flac_24bit',
-  ZQ32: '歌曲下载/wav_32bit',
-  SQ: '歌曲下载/flac',
-  HQ: '标清高清/MP3_320_16_Stero',
-  PQ: '标清高清/MP3_128_16_Stero',
-  LQ: '全曲试听/Mp3_64_22_16',
-};
-
 async function fetchListenUrl(track, toneFlag) {
   const cid = track.copyrightId || track.id;
   const params = new URLSearchParams({
@@ -106,9 +97,4 @@ async function lyric(track) {
   }
 }
 
-async function checkPlayable(track) {
-  const r = await resolveUrl(track);
-  return r.url ? await probeSize(r.url) : 0;
-}
-
-module.exports = { search, resolveUrl, lyric, checkPlayable };
+module.exports = { search, resolveUrl, lyric };

@@ -1,9 +1,6 @@
 'use strict';
 // 酷狗音乐
-const { fetchJson, probeSize, md5 } = require('./http');
-
-const KG_COOKIE =
-  'kg_mid=e7c09bf4e2ff701959e419aa6259f5e1; kg_dfid=2UHiuH0E3doo4ZW8ud01Teb3; kg_dfid_collect=d41d8cd98f00b204e9800998ecf8427e';
+const { fetchJson, md5 } = require('./http');
 
 async function search(keyword, page = 1, pageSize = 30) {
   if (!keyword) return { tracks: [], total: 0 };
@@ -78,19 +75,6 @@ async function resolveUrl(track) {
   return { url: null, size: 0 };
 }
 
-// 封面兜底：getdata 接口（需固定 kg cookie）
-async function fetchCover(track) {
-  try {
-    const json = await fetchJson(
-      `https://wwwapi.kugou.com/yy/index.php?r=play/getdata&hash=${track.hash || track.id}`,
-      { headers: { Cookie: KG_COOKIE } }
-    );
-    return (json.data && json.data.img) || '';
-  } catch {
-    return '';
-  }
-}
-
 async function lyric(track) {
   const hash = track.hash || track.id;
   const s = await fetchJson(
@@ -106,9 +90,4 @@ async function lyric(track) {
   return { lyric: Buffer.from(content, 'base64').toString('utf-8'), trans: '' };
 }
 
-async function checkPlayable(track) {
-  const r = await resolveUrl(track);
-  return r.url ? await probeSize(r.url) : 0;
-}
-
-module.exports = { search, resolveUrl, lyric, checkPlayable, fetchCover };
+module.exports = { search, resolveUrl, lyric };
