@@ -739,12 +739,13 @@ window.melody.onMaximized((maxed) => {
 /* ---------------- 主题 ---------------- */
 const THEMES = [
   { id: 'dark', name: '星空', color: '#1b2136' },
-  { id: 'midnight', name: '雾蓝', color: '#1a1e28' },
-  { id: 'rose', name: '灰玫', color: '#2a2126' },
-  { id: 'forest', name: '苔原', color: '#1e211d' },
-  { id: 'light', name: '晨雾', color: '#e8e6df' },
+  { id: 'caramel', name: '焦糖', color: '#C98A4B' },
+  { id: 'cocoa', name: '可可', color: '#B98A66' },
+  { id: 'terracotta', name: '赭石', color: '#C97B52' },
+  { id: 'latte', name: '拿铁', color: '#E8DCC8' },
 ];
 function applyTheme(id) {
+  if (!THEMES.some((t) => t.id === id)) id = 'dark'; // 旧主题 id 兜底
   document.body.dataset.theme = id;
   document.querySelectorAll('.theme-dot').forEach((d) => d.classList.toggle('active', d.dataset.theme === id));
 }
